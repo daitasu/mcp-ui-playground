@@ -1,5 +1,4 @@
 import {
-  basicComponentLibrary,
   remoteButtonDefinition,
   remoteTextDefinition,
   type UIActionResult,
@@ -13,6 +12,10 @@ import type {
 } from "@modelcontextprotocol/sdk/types.js";
 import type React from "react";
 import { useState } from "react";
+import {
+  extendedComponentLibrary,
+  customRemoteElements,
+} from "./components/customLibrary";
 
 const fetchMcpResource = async (
   toolName: string
@@ -45,6 +48,11 @@ const fetchMcpResource = async (
       arguments: {
         label: "Click Me!!!",
       },
+    });
+  } else if (toolName === "get_custom_action_button") {
+    result = await client.callTool({
+      name: toolName,
+      arguments: {},
     });
   } else {
     throw new Error(`Unknown tool: ${toolName}`);
@@ -167,10 +175,11 @@ const App: React.FC = () => {
                   resource={uiResource}
                   onUIAction={handleGenericMcpAction}
                   remoteDomProps={{
-                    library: basicComponentLibrary,
+                    library: extendedComponentLibrary,
                     remoteElements: [
                       remoteButtonDefinition,
                       remoteTextDefinition,
+                      ...customRemoteElements,
                     ],
                   }}
                   htmlProps={{
