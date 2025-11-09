@@ -13,7 +13,7 @@ export const extendedComponentLibrary: ComponentLibrary = {
         label: "label",
       },
       eventMapping: {
-        press: "onCustomPress",
+        press: "onPress",
       },
     },
   ],

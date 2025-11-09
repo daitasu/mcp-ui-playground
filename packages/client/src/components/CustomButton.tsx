@@ -1,26 +1,27 @@
-import type React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface CustomButtonProps {
   label?: string;
-  onCustomPress?: () => void;
+  onPress?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const CustomButton: React.FC<CustomButtonProps> = ({
-  label = "Button",
-  onCustomPress,
-}) => {
+export const CustomButton = React.forwardRef<
+  HTMLButtonElement,
+  CustomButtonProps
+>(({ label = "Button", onPress }, ref) => {
   const [count, setCount] = useState(0);
 
-  const handleClick = () => {
-    if (onCustomPress) {
-      onCustomPress();
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (onPress) {
+      onPress();
     }
+
     setCount((prev) => prev + 1);
   };
 
   return (
     <button
+      ref={ref}
       type="button"
       onClick={handleClick}
       className={`
@@ -37,4 +38,5 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
       </span>
     </button>
   );
-};
+});
+CustomButton.displayName = "CustomButton";
