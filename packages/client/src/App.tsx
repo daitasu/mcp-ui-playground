@@ -11,7 +11,7 @@ import type {
   Resource,
 } from "@modelcontextprotocol/sdk/types.js";
 import type React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   extendedComponentLibrary,
   customRemoteElements,
@@ -80,18 +80,9 @@ const App: React.FC = () => {
     setLoading(false);
   };
 
-  const handleGenericMcpAction = async (result: UIActionResult) => {
+  const handleGenericMcpAction = useCallback(async (result: UIActionResult) => {
     // 現在は tool の場合のみ検証
     if (result.type === "tool") {
-      if (result.payload.toolName === "processData") {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        return {
-          status: "success",
-          processedData: `Processed: ${result.payload.params.data}`,
-          timestamp: new Date().toISOString(),
-        };
-      }
-
       console.log(
         `Action received in host app - Tool: ${result.payload.toolName}, Params: ${result.payload.params.data}, Timestamp: ${result.payload.params.timestamp}`
       );
@@ -99,6 +90,7 @@ const App: React.FC = () => {
         tool: result.payload.toolName,
         params: result.payload.params,
       });
+      loadResource(result.payload.toolName);
     } else if (result.type === "prompt") {
       console.log(`Prompt received in host app:`, result.payload.prompt);
       setLastAction({ prompt: result.payload.prompt });
@@ -116,7 +108,7 @@ const App: React.FC = () => {
     return {
       status: "Action handled by host application",
     };
-  };
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-linear-to-b from-green-50 to-green-100">

@@ -117,13 +117,9 @@ app.post("/mcp", async (req, res) => {
 					  button.setAttribute('label', '${label}');
 					  button.addEventListener('press', () => {
 					    window.parent.postMessage({
-								type: 'tool',
+								type: 'notify',
 								payload: {
-									toolName: 'ui_interation',
-									params: {
-										data: 'クリック完了',
-										timestamp: ${Date.now()}
-									}
+									message: 'アクションが実行されました！ at' +${Date.now()}
 								}
 							}, '*');
 					  });
@@ -160,7 +156,7 @@ app.post("/mcp", async (req, res) => {
 					  	  window.parent.postMessage({
 									type: 'tool',
 									payload: {
-										toolName: 'ui_custom_nteration',
+										toolName: 'get_custom_action_button',
 										params: {
 											data: 'クリック完了',
 											timestamp: ${Date.now()}
