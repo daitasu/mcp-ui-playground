@@ -81,11 +81,7 @@ const App: React.FC = () => {
   };
 
   const handleGenericMcpAction = useCallback(async (result: UIActionResult) => {
-    // 現在は tool の場合のみ検証
     if (result.type === "tool") {
-      console.log(
-        `Action received in host app - Tool: ${result.payload.toolName}, Params: ${result.payload.params.data}, Timestamp: ${result.payload.params.timestamp}`
-      );
       setLastAction({
         tool: result.payload.toolName,
         params: result.payload.params,
@@ -104,7 +100,6 @@ const App: React.FC = () => {
       console.log(`Notification received in host app:`, result.payload.message);
       setLastAction({ message: result.payload.message });
     }
-
     return {
       status: "Action handled by host application",
     };
@@ -114,7 +109,7 @@ const App: React.FC = () => {
     <div className="flex min-h-screen bg-linear-to-b from-green-50 to-green-100">
       <div className="w-250 bg-linear-to-b from-green-600 to-green-700 shadow-[4px_0_12px_rgba(0,0,0,0.1)] flex flex-col">
         <h1 className="text-14 font-bold text-white p-3 border-b border-green-800/30 bg-green-700/50">
-          MCP-UI Example
+          MCP-UI PlayGround
         </h1>
         <nav className="text-16 flex-1 p-2 flex flex-col [&>button]:w-full [&>button]:text-left [&>button]:px-3 [&>button]:py-2 [&>button]:text-white [&>button]:rounded-8 [&>button]:font-normal [&>button]:text-16 [&>button]:transition-all [&>button]:duration-200 [&>button:hover]:bg-green-500/30 [&>button:hover]:pl-4 [&>button:focus]:bg-green-500/40 [&>button:focus]:outline-none [&>button:focus]:ring-2 [&>button:focus]:ring-green-300/50">
           <button
@@ -160,7 +155,7 @@ const App: React.FC = () => {
           {uiResource && (
             <div className="bg-white rounded-16 shadow-[0_4px_12px_rgba(0,0,0,0.08)] p-3 border border-green-200">
               <h2 className="text-20 font-bold text-green-800 mb-2">
-                Rendering Resource: {uiResource.uri}
+                Result: {uiResource.uri}
               </h2>
               <div className="border-2 border-green-300 rounded-12 p-2 bg-green-50/30">
                 <UIResourceRenderer
