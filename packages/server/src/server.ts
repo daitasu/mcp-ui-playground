@@ -138,7 +138,7 @@ app.post("/mcp", async (req, res) => {
 		server.registerTool(
 			"get_custom_action_button",
 			{
-				title: "GetCustomActionButton",
+				title: "GetCustomActionCounter",
 				description:
 					"カスタムReactコンポーネントを使ったボタンのUIリソースを返します",
 				inputSchema: {},
@@ -150,15 +150,16 @@ app.post("/mcp", async (req, res) => {
 						type: "remoteDom",
 						framework: "react",
 						script: `
-              const customButton = document.createElement('custom-button');
-              customButton.setAttribute('label', 'Custom Button');
-					  	customButton.addEventListener('press', () => {
+              const customButton = document.createElement('custom-counter');
+              customButton.setAttribute('label', 'Custom Counter');
+					  	customButton.addEventListener('press', (event) => {
+								const count = event.detail;
 					  	  window.parent.postMessage({
 									type: 'tool',
 									payload: {
 										toolName: 'get_custom_action_button',
 										params: {
-											data: 'クリック完了',
+											data: count,
 											timestamp: ${Date.now()}
 										}
 									}

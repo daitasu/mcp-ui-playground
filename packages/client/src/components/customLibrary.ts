@@ -1,5 +1,6 @@
 import { basicComponentLibrary, type ComponentLibrary } from "@mcp-ui/client";
 import { CustomButton } from "./CustomButton";
+import { CustomCounter } from "./CustomCounter";
 
 // カスタムコンポーネントライブラリの定義（基本ライブラリと統合）
 export const extendedComponentLibrary: ComponentLibrary = {
@@ -16,6 +17,16 @@ export const extendedComponentLibrary: ComponentLibrary = {
         press: "onPress",
       },
     },
+    {
+      tagName: "custom-counter",
+      component: CustomCounter,
+      propMapping: {
+        label: "label",
+      },
+      eventMapping: {
+        press: "onPress",
+      },
+    },
   ],
 };
 
@@ -23,6 +34,11 @@ export const extendedComponentLibrary: ComponentLibrary = {
 export const customRemoteElements = [
   {
     tagName: "custom-button",
+    remoteAttributes: ["label"],
+    remoteEvents: ["press"],
+  },
+  {
+    tagName: "custom-counter",
     remoteAttributes: ["label"],
     remoteEvents: ["press"],
   },
